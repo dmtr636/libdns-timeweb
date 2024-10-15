@@ -56,7 +56,7 @@ func (p *Provider) doAPIRequest(req *http.Request, result interface{}) error {
 	body, err := io.ReadAll(response.Body)
 
 	if response.StatusCode >= 400 {
-		return fmt.Errorf("got error status: HTTP %d: %+v", response.StatusCode, string(body))
+		return fmt.Errorf("got error status: HTTP %d: url: %s: %+v", response.StatusCode, req.URL, string(body))
 	}
 
 	if response.StatusCode == http.StatusNoContent {
