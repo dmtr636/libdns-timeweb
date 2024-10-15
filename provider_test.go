@@ -2,12 +2,13 @@ package timeweb_test
 
 import (
 	"context"
-	"github.com/joho/godotenv"
-	"github.com/libdns/libdns"
-	"github.com/libdns/timeweb"
-	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
+
+	timeweb "github.com/dmtr636/libdns-timeweb"
+	"github.com/joho/godotenv"
+	"github.com/libdns/libdns"
+	"github.com/stretchr/testify/assert"
 )
 
 var provider timeweb.Provider
