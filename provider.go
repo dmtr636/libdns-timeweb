@@ -15,7 +15,7 @@ type Provider struct {
 }
 
 func (p *Provider) GetRecords(ctx context.Context, zone string) ([]libdns.Record, error) {
-	reqURL := fmt.Sprintf("%s/domains/%s/dns-records", p.ApiURL, strings.Replace(zone, "*.", "", 1))
+	reqURL := fmt.Sprintf("%s/domains/%s/dns-records", p.ApiURL, strings.TrimSuffix(strings.Replace(zone, "*.", "", 1), "."))
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, reqURL, nil)
 	if err != nil {
 		return nil, err

@@ -14,7 +14,7 @@ import (
 
 func (p *Provider) createRecord(ctx context.Context, zone string, record libdns.Record) (SavedRecord, error) {
 	body, err := json.Marshal(libdnsToRecord(record))
-	reqURL := fmt.Sprintf("%s/domains/%s/dns-records", p.ApiURL, strings.Replace(zone, "*.", "", 1))
+	reqURL := fmt.Sprintf("%s/domains/%s/dns-records", p.ApiURL, strings.TrimSuffix(strings.Replace(zone, "*.", "", 1), "."))
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, reqURL, bytes.NewReader(body))
 
 	var result SavedRecord
@@ -25,7 +25,7 @@ func (p *Provider) createRecord(ctx context.Context, zone string, record libdns.
 
 func (p *Provider) updateRecord(ctx context.Context, zone string, record libdns.Record) (SavedRecord, error) {
 	body, err := json.Marshal(libdnsToRecord(record))
-	reqURL := fmt.Sprintf("%s/domains/%s/dns-records/%s", p.ApiURL, strings.Replace(zone, "*.", "", 1), record.ID)
+	reqURL := fmt.Sprintf("%s/domains/%s/dns-records/%s", p.ApiURL, strings.TrimSuffix(strings.Replace(zone, "*.", "", 1), "."), record.ID)
 	req, err := http.NewRequestWithContext(ctx, http.MethodPatch, reqURL, bytes.NewReader(body))
 
 	var result SavedRecord
@@ -35,7 +35,7 @@ func (p *Provider) updateRecord(ctx context.Context, zone string, record libdns.
 }
 
 func (p *Provider) deleteRecord(ctx context.Context, zone string, record libdns.Record) error {
-	reqURL := fmt.Sprintf("%s/domains/%s/dns-records/%s", p.ApiURL, strings.Replace(zone, "*.", "", 1), record.ID)
+	reqURL := fmt.Sprintf("%s/domains/%s/dns-records/%s", p.ApiURL, strings.TrimSuffix(strings.Replace(zone, "*.", "", 1), "."), record.ID)
 	req, err := http.NewRequestWithContext(ctx, http.MethodDelete, reqURL, nil)
 
 	err = p.doAPIRequest(req, nil)
